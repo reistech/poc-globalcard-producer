@@ -12,6 +12,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.UUID;
 
 
 @Path("invoice-type")
@@ -27,9 +28,10 @@ public class InvoiceTypeResource {
     @POST
     @Path("/emit")
     @Produces(MediaType.TEXT_PLAIN)
-    public String createRequest(InvoiceType invoiceType) {
-        invoyceTypeRequestEmitter.send(invoiceType.name);
-        return invoiceType.name;
+    public String createRequest() {
+        UUID uuid = UUID.randomUUID();
+        invoyceTypeRequestEmitter.send(uuid.toString());
+        return uuid.toString();
     }
 
 }
