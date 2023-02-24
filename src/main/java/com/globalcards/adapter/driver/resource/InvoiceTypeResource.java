@@ -26,12 +26,11 @@ public class InvoiceTypeResource {
     Emitter<String> invoyceTypeRequestEmitter;
 
     @POST
-    @Path("/emit")
+    @Path("/request")
     @Produces(MediaType.TEXT_PLAIN)
     public String createRequest() {
         UUID uuid = UUID.randomUUID();
         invoyceTypeRequestEmitter.send(uuid.toString());
         return uuid.toString();
     }
-
 }
