@@ -11,6 +11,8 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,16 +23,23 @@ import java.util.UUID;
 @Consumes("application/json")
 @Slf4j
 public class InvoiceTypeResource {
-
-    @Channel("invoice-requests")
+    @Channel("sends")
     Emitter<String> invoyceTypeRequestEmitter;
 
     @POST
-    @Path("/request")
+    @Path("/emit")
     @Produces(MediaType.TEXT_PLAIN)
     public String createRequest() {
         UUID uuid = UUID.randomUUID();
-        invoyceTypeRequestEmitter.send(uuid.toString());
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("C:/Users/lucas.barbosa.p.reis/test.txt"));
+
+            invoyceTypeRequestEmitter.send(bufferedReader.readLine());
+            return bufferedReader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
         return uuid.toString();
     }
 }
