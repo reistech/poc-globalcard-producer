@@ -30,16 +30,19 @@ public class InvoiceTypeResource {
     @Path("/emit")
     @Produces(MediaType.TEXT_PLAIN)
     public String createRequest() {
-        UUID uuid = UUID.randomUUID();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader("C:/Users/lucas.barbosa.p.reis/test.txt"));
-
-            invoyceTypeRequestEmitter.send(bufferedReader.readLine());
-            return bufferedReader.readLine();
+            String line = bufferedReader.readLine();
+            while( line != null ) {
+                invoyceTypeRequestEmitter.send(line);
+                line = bufferedReader.readLine();
+            }
         } catch (IOException e) {
             e.printStackTrace();
 
         }
+
+        UUID uuid = UUID.randomUUID();
         return uuid.toString();
     }
 }
