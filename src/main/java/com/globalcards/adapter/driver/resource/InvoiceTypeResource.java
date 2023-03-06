@@ -1,19 +1,18 @@
 package com.globalcards.adapter.driver.resource;
 
-import com.globalcards.adapter.infrastructure.entity.InvoiceType;
-import io.smallrye.mutiny.Uni;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.UUID;
 
 
@@ -23,7 +22,7 @@ import java.util.UUID;
 @Consumes("application/json")
 @Slf4j
 public class InvoiceTypeResource {
-    @Channel("sends")
+    @Channel("invoice-requests")
     Emitter<String> invoyceTypeRequestEmitter;
 
     @POST
