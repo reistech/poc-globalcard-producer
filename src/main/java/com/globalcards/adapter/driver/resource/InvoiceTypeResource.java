@@ -24,7 +24,12 @@ import java.util.UUID;
 public class InvoiceTypeResource {
     @Channel("invoice-requests")
     Emitter<String> invoyceTypeRequestEmitter;
-
+    
+    
+    @Channel("fila-output")
+    Emitter<String> filaOutPutEmitter;
+    
+    
     @POST
     @Path("/emit")
     @Produces(MediaType.TEXT_PLAIN)
@@ -33,14 +38,13 @@ public class InvoiceTypeResource {
             BufferedReader bufferedReader = new BufferedReader(new FileReader("C:/Users/lucas.barbosa.p.reis/test.txt"));
             String line = bufferedReader.readLine();
             while( line != null ) {
-                invoyceTypeRequestEmitter.send(line);
+                filaOutPutEmitter.send(line);
                 line = bufferedReader.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
 
         }
-
         UUID uuid = UUID.randomUUID();
         return uuid.toString();
     }
